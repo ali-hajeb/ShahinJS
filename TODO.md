@@ -1,17 +1,26 @@
 # ShahinJS
-*A basic CMS built using Javascript*
+
+_A basic CMS built using Javascript_
+
 ## Divisions
+
 ### Backend
+
 Backend is powered by NodeJS. It uses ExpressJS framework and MongoDB as a database manager.
+
 - Users
-  - [ ] Register
-  - [ ] Login
-  - [ ] Roles
+  - [x] Register
+  - [x] Login
+- Admins
+  - [x] Register
+  - [x] Login
+  - [ ] Access level
 - Posts
-  - [ ] Publish
-  - [ ] Edit
-  - [ ] Delete
-  - [ ] Likes
+  - [x] Publish
+  - [x] Edit
+  - [x] Delete
+  - [x] Likes
+  - [x] Share
 - Comments
   - [ ] Submit
   - [ ] Approve
@@ -43,9 +52,13 @@ Backend is powered by NodeJS. It uses ExpressJS framework and MongoDB as a datab
   - [ ] Delete
   - [ ] Thumbnail optimization
   - [ ] Media library
+
 ### Frontend
+
 Frontend is powered by ReactJs. NextJS can be used for client panel as it's optimized for SEO.
+
 #### Admin panel
+
 - Login page
 - Dashboard
   - Search
@@ -53,7 +66,9 @@ Frontend is powered by ReactJs. NextJS can be used for client panel as it's opti
 - Post editor
 - Comments
 - Views
+
 #### Client panel
+
 - Home page
 - Post page
 - Category page
