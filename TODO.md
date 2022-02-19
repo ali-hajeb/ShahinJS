@@ -38,10 +38,10 @@ Backend is powered by NodeJS. It uses ExpressJS framework and MongoDB as a datab
   - [ ] By category
   - [ ] By label
 - Category
-  - [ ] Add
-  - [ ] Edit
-  - [ ] Delete
-  - [ ] Show posts
+  - [x] Add
+  - [x] Edit
+  - [x] Delete
+  - [x] Show posts
 - Labels
   - [ ] Add
   - [ ] Edit
