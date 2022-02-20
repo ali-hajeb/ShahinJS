@@ -50,7 +50,7 @@ const postSchema = new Schema(
     },
     comments: [{ body: String, date: Date }],
     category: [{ type: Schema.Types.ObjectId, ref: 'Categories' }],
-    label: [{ name: String, slug: String }],
+    label: [{ type: Schema.Types.ObjectId, ref: 'Lables' }],
   },
   { timestamps: true },
 );
