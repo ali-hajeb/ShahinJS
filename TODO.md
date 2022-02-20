@@ -21,6 +21,16 @@ Backend is powered by NodeJS. It uses ExpressJS framework and MongoDB as a datab
   - [x] Delete
   - [x] Likes
   - [x] Share
+- Category
+  - [x] Add
+  - [x] Edit
+  - [x] Delete
+  - [x] Show posts
+- Labels
+  - [x] Add
+  - [x] Edit
+  - [x] Delete
+  - [x] Show posts
 - Comments
   - [ ] Submit
   - [ ] Approve
@@ -37,16 +47,6 @@ Backend is powered by NodeJS. It uses ExpressJS framework and MongoDB as a datab
   - [ ] By content
   - [ ] By category
   - [ ] By label
-- Category
-  - [x] Add
-  - [x] Edit
-  - [x] Delete
-  - [x] Show posts
-- Labels
-  - [ ] Add
-  - [ ] Edit
-  - [ ] Delete
-  - [ ] Show posts
 - Photos and thumbnails
   - [ ] Upload
   - [ ] Delete
