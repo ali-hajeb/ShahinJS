@@ -49,7 +49,7 @@ const postSchema = new Schema(
       default: 0,
     },
     comments: [{ body: String, date: Date }],
-    category: [{ name: String, slug: String }],
+    category: [{ type: Schema.Types.ObjectId, ref: 'Categories' }],
     label: [{ name: String, slug: String }],
   },
   { timestamps: true },
