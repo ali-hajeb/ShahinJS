@@ -37,10 +37,6 @@ const deleteCategory = async (req, res) => {
   try {
     const cat = await categorySchema.findById(req.body.id);
     if (!cat) return res.status(httpStatus.NOT_FOUND).send();
-    await categorySchema.removeChildFromParent(cat.parent, req.body.id);
-    await categorySchema
-      .updateMany({ parent: cat._id }, { $unset: { parent: 1 } })
-      .orFail();
     await cat.remove();
     res.status(httpStatus.OK).send();
   } catch (error) {
@@ -59,14 +55,8 @@ const getCategories = async (req, res) => {
     res.status(httpStatus.BAD_REQUEST).json(error);
   }
 };
-// const getCategories = async (req, res) => {
-//   try {
 
-//   } catch (error) {
-
-//   }
-// }
-// const getCategories = async (req, res) => {
+// const function = async (req, res) => {
 //   try {
 
 //   } catch (error) {
