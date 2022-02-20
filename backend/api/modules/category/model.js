@@ -1,9 +1,7 @@
 const { Schema, model } = require('mongoose');
 const slug = require('slug');
-const validator = require('validator');
 const postSchema = require('../post/model');
 
-const engAndNumRegex = /^[a-z][a-z0-9]*$/i;
 const categorySchema = new Schema({
   slug: {
     type: String,
