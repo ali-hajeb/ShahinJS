@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const slug = require('slug');
 const validator = require('validator');
+const postSchema = require('../post/model');
 
 const engAndNumRegex = /^[a-z][a-z0-9]*$/i;
 const categorySchema = new Schema({
@@ -16,22 +17,6 @@ const categorySchema = new Schema({
     trim: true,
     required: [true, 'Category name is required!'],
   },
-  // name_en: {
-  //   type: String,
-  //   unique: [true, 'Category slug must be unique!'],
-  //   validate: {
-  //     validator(name_en) {
-  //       return engAndNumRegex.test(name_en);
-  //     },
-  //     message:
-  //       '{VALUE} does not match with the pattern! It must consist of english letters and/or numbers.',
-  //   },
-  //   trim: true,
-  //   // required: [
-  //   //   true,
-  //   //   'Category name with english letters and/or numbers is required!',
-  //   // ],
-  // },
   desc: {
     type: String,
     trim: true,
@@ -69,6 +54,19 @@ categorySchema.methods = {
 
 categorySchema.pre('validate', function (next) {
   this.slugify(this.name);
+  next();
+});
+
+categorySchema.post('remove', async function (res, next) {
+  await this.constructor.removeChildFromParent(this.parent, this._id);
+  await this.constructor
+    .updateMany({ parent: this._id }, { $unset: { parent: 1 } })
+    .orFail();
+  await postSchema.updateMany(
+    { $in: { category: this._id } },
+    { $pull: { category: this._id } },
+  );
+
   next();
 });
 
