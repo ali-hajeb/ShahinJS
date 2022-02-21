@@ -8,5 +8,6 @@ router.post('/', jwtAdminAuth, categoryControllers.createCategory);
 router.patch('/', jwtAdminAuth, categoryControllers.editCategory);
 router.delete('/', jwtAdminAuth, categoryControllers.deleteCategory);
 router.get('/', categoryControllers.getCategories);
+router.get('/:id', categoryControllers.getCategoryById);
 
 module.exports = router;
