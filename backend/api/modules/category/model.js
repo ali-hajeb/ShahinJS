@@ -55,11 +55,22 @@ categorySchema.pre('validate', function (next) {
   next();
 });
 
+categorySchema.pre('save', function (next, opts) {
+  console.log('pre', opts, this.parent);
+  next();
+});
+
+categorySchema.post('save', function (res, next) {
+  console.log('post', res, this.parent);
+  next();
+});
+
 categorySchema.post('remove', async function (res, next) {
   await this.constructor.removeChildFromParent(this.parent, this._id);
-  await this.constructor
-    .updateMany({ parent: this._id }, { $unset: { parent: 1 } })
-    .orFail();
+  await this.constructor.updateMany(
+    { parent: this._id },
+    { $unset: { parent: 1 } },
+  );
   await postSchema.updateMany(
     { $in: { category: this._id } },
     { $pull: { category: this._id } },
