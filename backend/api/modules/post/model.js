@@ -48,7 +48,7 @@ const postSchema = new Schema(
       type: Number,
       default: 0,
     },
-    comments: [{ body: String, date: Date }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Comments' }],
     category: [{ type: Schema.Types.ObjectId, ref: 'Categories' }],
     label: [{ type: Schema.Types.ObjectId, ref: 'Lables' }],
   },
