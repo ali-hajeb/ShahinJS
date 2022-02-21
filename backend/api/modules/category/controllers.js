@@ -56,6 +56,16 @@ const getCategories = async (req, res) => {
   }
 };
 
+const getCategoryById = async (req, res) => {
+  try {
+    const cat = await categorySchema.findById(req.params.id);
+    res.status(httpStatus.OK).json(cat);
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.BAD_REQUEST).json(error);
+  }
+};
+
 // const function = async (req, res) => {
 //   try {
 
@@ -69,4 +79,5 @@ module.exports = {
   editCategory,
   deleteCategory,
   getCategories,
+  getCategoryById,
 };
