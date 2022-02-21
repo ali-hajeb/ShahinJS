@@ -36,7 +36,16 @@ const deleteLabel = async (req, res) => {
 const getLabels = async (req, res) => {
   try {
     const { filter = {}, limit = '*' } = req.body;
-    const label = await labelSchema.find({ filter, limit });
+    const labels = await labelSchema.find({ filter, limit });
+    res.status(httpStatus.OK).json(labels);
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.BAD_REQUEST).json(error);
+  }
+};
+const getLabelById = async (req, res) => {
+  try {
+    const label = await labelSchema.findById(req.params.id);
     res.status(httpStatus.OK).json(label);
   } catch (error) {
     console.log(error);
@@ -57,4 +66,5 @@ module.exports = {
   editLabel,
   deleteLabel,
   getLabels,
+  getLabelById,
 };
