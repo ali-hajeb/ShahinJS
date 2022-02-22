@@ -5,15 +5,15 @@ const postSchema = require('../post/model');
 const labelSchema = new Schema({
   slug: {
     type: String,
-    unique: [true, 'Category slug must be unique!'],
+    unique: [true, 'Label slug must be unique!'],
     trim: true,
-    required: [true, 'Category slug is required!'],
+    required: [true, 'Label slug is required!'],
   },
   name: {
     type: String,
-    unique: [true, 'Category name must be unique!'],
+    unique: [true, 'Label name must be unique!'],
     trim: true,
-    required: [true, 'Category name is required!'],
+    required: [true, 'Label name is required!'],
   },
   desc: {
     type: String,
