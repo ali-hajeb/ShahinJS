@@ -26,6 +26,11 @@ const editCategory = async (req, res) => {
       if (req.body.parent)
         await categorySchema.addChildToParent(req.body.parent, cat._id);
     }
+    if (req.body.removedChilderen)
+      await categorySchema.updateMany(
+        { _id: { $in: req.body.removedChilderen } },
+        { $unset: { parent: 1 } },
+      );
     console.log(cat);
     res.status(httpStatus.OK).json(updatedCat);
   } catch (error) {
