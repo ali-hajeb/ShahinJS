@@ -12,10 +12,9 @@ const createLabel = async (req, res) => {
 };
 const editLabel = async (req, res) => {
   try {
-    const label = await labelSchema.findByIdAndUpdate(req.body.id, req.body, {
-      new: true,
-    });
-    res.status(httpStatus.OK).json(label);
+    const label = await labelSchema.findById(req.body.id);
+    for (const field in req.body) label[field] = req.body[field];
+    res.status(httpStatus.OK).json(await label.save());
   } catch (error) {
     console.log(error);
     res.status(httpStatus.BAD_REQUEST).json(error);
