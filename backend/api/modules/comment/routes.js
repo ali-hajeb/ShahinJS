@@ -6,7 +6,8 @@ const router = new Router();
 router.post('/', commentController.writeComment);
 router.patch('/', commentController.editComment);
 router.delete('/', commentController.deleteComment);
-router.get('/:id', commentController.getCommentById);
+router.get('/', commentController.getCommentById);
 router.get('/user/:id', commentController.getCommentsByUserId);
+router.get('/post/:id', commentController.getCommentsByPostId);
 
 module.exports = router;
