@@ -76,4 +76,5 @@ module.exports = {
   getCommentsByUserId,
   getCommentsByPostId,
   getCommentById,
+  changeCommentStatus,
 };
