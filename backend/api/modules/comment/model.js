@@ -52,9 +52,14 @@ commentSchema.post('save', function (err, doc, next) {
   next();
 });
 
+commentSchema.post('remove', function (res, next) {
+  this.removeCommentFromPost();
+  next();
+});
+
 commentSchema.methods = {
-  setCommentStatus(status = 'PROCESSING' || 'APPROVED' || 'DELETED') {
-    this.status = status;
+  async setCommentStatus(status = 'PROCESSING' || 'APPROVED' || 'DELETED') {
+    await this.updateOne({ status });
   },
   addCommentToPost() {
     return postSchema.findByIdAndUpdate(
