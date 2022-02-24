@@ -34,8 +34,8 @@ const deleteLabel = async (req, res) => {
 
 const getLabels = async (req, res) => {
   try {
-    const { filter = {}, limit = '*' } = req.body;
-    const labels = await labelSchema.find({ filter, limit });
+    const { filter = {}, limit = '*', skip = 0 } = req.body;
+    const labels = await labelSchema.find({ filter, limit, skip });
     res.status(httpStatus.OK).json(labels);
   } catch (error) {
     console.log(error);
