@@ -1,9 +1,14 @@
 const { Schema, model } = require('mongoose');
 const postSchema = require('../post/model');
 const validator = require('validator');
+const httpStatus = require('http-status');
 
 const commentSchema = new Schema(
   {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'Users',
+    },
     email: {
       type: String,
       required: [true, 'Email is required!'],
@@ -47,10 +52,24 @@ commentSchema.post('save', function (err, doc, next) {
       status: httpStatus.BAD_REQUEST,
       err,
     });
-
-  this.addCommentToPost();
+  console.log(this.status);
   next();
 });
+
+// commentSchema.post(
+//   'updateOne',
+//   { document: true, query: false },
+//   async function () {
+//     console.log(this.status);
+//     // if (err) return next({ status: httpStatus.BAD_REQUEST, err });
+//     if (this.isModified('status')) {
+//       console.log(this.status);
+//       if (this.status === 'APPROVED') await this.addCommentToPost();
+//       else await this.removeCommentFromPost();
+//     }
+//     // next();
+//   },
+// );
 
 commentSchema.post('remove', function (res, next) {
   this.removeCommentFromPost();
@@ -59,17 +78,17 @@ commentSchema.post('remove', function (res, next) {
 
 commentSchema.methods = {
   async setCommentStatus(status = 'PROCESSING' || 'APPROVED' || 'DELETED') {
-    await this.updateOne({ status });
+    return await this.updateOne({ status }, { new: true });
   },
-  addCommentToPost() {
-    return postSchema.findByIdAndUpdate(
+  async addCommentToPost() {
+    return await postSchema.findByIdAndUpdate(
       this.postId,
-      { $push: { comments: this._id } },
+      { $addToSet: { comments: this._id } },
       { new: true },
     );
   },
-  removeCommentFromPost() {
-    return postSchema.findByIdAndUpdate(
+  async removeCommentFromPost() {
+    return await postSchema.findByIdAndUpdate(
       this.postId,
       { $pull: { comments: this._id } },
       { new: true },
