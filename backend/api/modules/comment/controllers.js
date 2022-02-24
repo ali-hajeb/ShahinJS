@@ -33,26 +33,11 @@ const deleteComment = async (req, res) => {
     res.status(httpStatus.BAD_REQUEST).json(error);
   }
 };
-const getCommentsByUserId = async (req, res) => {
-  try {
-  } catch (error) {}
-};
 
-const getCommentsByPostId = async (req, res) => {
+const getComments = async (req, res) => {
   try {
-    const comment = await commentSchema.find({ postId: req.params.id });
-    comment
-      ? res.status(httpStatus.OK).json(comment)
-      : res.status(httpStatus.NOT_FOUND);
-  } catch (error) {
-    console.log(error);
-    res.status(httpStatus.BAD_REQUEST).json(error);
-  }
-};
-
-const getCommentById = async (req, res) => {
-  try {
-    const comment = await commentSchema.findById(req.body.id);
+    const { filter = {}, limit = '*', skip = 0 } = req.body;
+    const comment = await commentSchema.find({ filter, limit, skip });
     comment
       ? res.status(httpStatus.OK).json(comment)
       : res.status(httpStatus.NOT_FOUND);
@@ -65,16 +50,23 @@ const getCommentById = async (req, res) => {
 const changeCommentStatus = async (req, res) => {
   try {
     const comment = await commentSchema.findById(req.body.id);
-    await comment.setCommentStatus(req.body.status);
-  } catch (error) {}
+    const updatedComment = await comment.setCommentStatus(req.body.status);
+    if (req.body.status === 'APPROVED') await comment.addCommentToPost();
+    else if (req.body.status === 'DELETED') {
+      await comment.remove();
+    } else await comment.removeCommentFromPost();
+
+    res.status(httpStatus.OK).json(updatedComment);
+  } catch (error) {
+    console.log(error);
+    res.status(httpStatus.BAD_REQUEST).json(error);
+  }
 };
 
 module.exports = {
   writeComment,
   editComment,
   deleteComment,
-  getCommentsByUserId,
-  getCommentsByPostId,
-  getCommentById,
+  getComments,
   changeCommentStatus,
 };
