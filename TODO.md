@@ -32,10 +32,10 @@ Backend is powered by NodeJS. It uses ExpressJS framework and MongoDB as a datab
   - [x] Delete
   - [x] Show posts
 - Comments
-  - [ ] Submit
-  - [ ] Approve
-  - [ ] Publish
-  - [ ] Delete
+  - [x] Submit
+  - [x] Approve
+  - [x] Publish
+  - [x] Delete
 - Views
   - [ ] Each post
   - [ ] Combined
