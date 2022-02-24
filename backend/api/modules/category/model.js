@@ -24,13 +24,6 @@ const categorySchema = new Schema({
     ref: 'Categories',
     validate: {
       validator(parent) {
-        console.log(
-          this._id,
-          parent,
-          !this._id.equals(parent),
-          this.childeren.indexOf(parent) < 0,
-          !this._id.equals(parent) && this.childeren.indexOf(parent) < 0,
-        );
         return !this._id.equals(parent) && this.childeren.indexOf(parent) < 0;
       },
       message: (props) => `${props.value} is not a valid parent category!`,
@@ -84,7 +77,7 @@ categorySchema.statics = {
     return this.findByIdAndUpdate(
       parentId,
       {
-        $push: { childeren: childId },
+        $addToSet: { childeren: childId },
       },
       { new: true },
     );
