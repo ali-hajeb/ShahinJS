@@ -52,8 +52,8 @@ const deleteCategory = async (req, res) => {
 
 const getCategories = async (req, res) => {
   try {
-    const { filter = {}, limit = '*' } = req.body;
-    const cat = await categorySchema.find({ filter, limit });
+    const { filter = {}, limit = 0, skip = 0 } = req.body;
+    const cat = await categorySchema.find(filter, null, { limit, skip });
     res.status(httpStatus.OK).json(cat);
   } catch (error) {
     console.log(error);
