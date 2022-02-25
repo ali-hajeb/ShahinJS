@@ -11,39 +11,70 @@ const addPost = async (req, res) => {
     return res.status(httpStatus.BAD_REQUEST).json(error);
   }
 };
-const getPostById = async (req, res) => {
-  try {
-    const post = await postSchema.findById(req.params.id).populate('author');
-    res.status(httpStatus.OK).json(post);
-  } catch (error) {
-    console.log(error);
-    return res.status(httpStatus.BAD_REQUEST).json(error);
-  }
-};
-const getPostBySlug = async (req, res) => {
-  try {
-    const post = await postSchema
-      .findOne({ slug: req.params.slug })
-      .populate('author');
-    res.status(httpStatus.OK).json(post);
-  } catch (error) {
-    console.log(error);
-    return res.status(httpStatus.BAD_REQUEST).json(error);
-  }
-};
+// const getPostById = async (req, res) => {
+//   try {
+//     const post = await postSchema.findById(req.params.id).populate('author');
+//     res.status(httpStatus.OK).json(post);
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(httpStatus.BAD_REQUEST).json(error);
+//   }
+// };
+// const getPostBySlug = async (req, res) => {
+//   try {
+//     const post = await postSchema
+//       .findOne({ slug: req.params.slug })
+//       .populate('author');
+//     res.status(httpStatus.OK).json(post);
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(httpStatus.BAD_REQUEST).json(error);
+//   }
+// };
+// const getPosts = async (req, res) => {
+//   try {
+//     const { skip = 0, limit = 0 } = req.query;
+//     const posts = await postSchema.list({
+//       skip: parseInt(skip),
+//       limit: parseInt(limit),
+//     });
+//     res.status(httpStatus.OK).json(posts);
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(httpStatus.BAD_REQUEST).json(error);
+//   }
+// };
+
 const getPosts = async (req, res) => {
   try {
-    const { skip = 0, limit = 0 } = req.query;
-    const posts = await postSchema.list({
-      skip: parseInt(skip),
-      limit: parseInt(limit),
-    });
-    res.status(httpStatus.OK).json(posts);
+    const { filter = {}, limit = 0, skip = 0, incView = false } = req.body;
+    postSchema
+      .find(
+        filter,
+        null,
+        {
+          limit,
+          skip,
+          sort: { createdAt: -1 },
+        },
+        async (err, docs) => {
+          if (err) return res.status(httpStatus.BAD_REQUEST).json(err);
+          else if (incView && docs.length === 1) {
+            docs[0].views += 1;
+            return res.status(httpStatus.OK).json(await docs[0].save());
+          } else res.status(httpStatus.OK).json(docs);
+        },
+      )
+      .populate('author')
+      .populate('category')
+      .populate('label')
+      .populate('comments');
   } catch (error) {
     console.log(error);
     return res.status(httpStatus.BAD_REQUEST).json(error);
   }
 };
+
 const editPost = async (req, res) => {
   try {
     const post = await postSchema.findById(req.body.id);
@@ -103,8 +134,8 @@ const hidePost = async (req, res) => {};
 
 module.exports = {
   addPost,
-  getPostBySlug,
-  getPostById,
+  // getPostBySlug,
+  // getPostById,
   getPosts,
   editPost,
   deletePost,
