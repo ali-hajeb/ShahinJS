@@ -36,8 +36,12 @@ const deleteComment = async (req, res) => {
 
 const getComments = async (req, res) => {
   try {
-    const { filter = {}, limit = '*', skip = 0 } = req.body;
-    const comment = await commentSchema.find({ filter, limit, skip });
+    const { filter = {}, limit = 0, skip = 0 } = req.body;
+    const comment = await commentSchema.find(filter, null, {
+      limit,
+      skip,
+      sort: { createdAt: 1 },
+    });
     comment
       ? res.status(httpStatus.OK).json(comment)
       : res.status(httpStatus.NOT_FOUND);
