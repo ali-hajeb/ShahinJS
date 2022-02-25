@@ -37,7 +37,7 @@ Backend is powered by NodeJS. It uses ExpressJS framework and MongoDB as a datab
   - [x] Publish
   - [x] Delete
 - Views
-  - [ ] Each post
+  - [x] Each post
   - [ ] Combined
 - Menu
   - [ ] Navbar
