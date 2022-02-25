@@ -8,7 +8,7 @@ router.post('/', jwtAdminAuth, postControllers.addPost);
 router.patch('/', jwtAdminAuth, postControllers.editPost);
 router.delete('/', jwtAdminAuth, postControllers.deletePost);
 router.get('/', postControllers.getPosts);
-router.get('/:id', postControllers.getPostById);
+// router.get('/:id', postControllers.getPostById);
 // router.get('/:slug', postControllers.getPostBySlug);
 router.post('/like', jwtUserAuth, postControllers.like);
 router.post('/share', jwtUserAuth, postControllers.share);
