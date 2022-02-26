@@ -19,3 +19,7 @@ module.exports.connect = async () => {
       });
   }
 };
+
+module.exports.checkConnection = async () => {
+  return mongoose.connection.readyState;
+};
