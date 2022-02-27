@@ -119,4 +119,9 @@ postSchema.statics = {
   },
 };
 
+postSchema.index({
+  title: 'text',
+  body: 'text',
+});
+
 module.exports = model('Posts', postSchema, 'Posts');
