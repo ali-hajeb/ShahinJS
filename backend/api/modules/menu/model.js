@@ -3,7 +3,7 @@ const { Schema, model } = require('mongoose');
 const menuSchema = new Schema({
   type: {
     type: String,
-    enum: ['NAV', 'SIDE'],
+    enum: ['NAV', 'SIDE', 'FOOT'],
     require: true,
   },
   title: String,
