@@ -11,6 +11,6 @@ router.get('/', postControllers.getPosts);
 // router.get('/:id', postControllers.getPostById);
 // router.get('/:slug', postControllers.getPostBySlug);
 router.post('/like', jwtUserAuth, postControllers.like);
-router.post('/share', jwtUserAuth, postControllers.share);
+router.post('/share', postControllers.share);
 router.post('/comment', jwtUserAuth, postControllers.comment);
 module.exports = router;
