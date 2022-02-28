@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 const { MONGO_URI } = process.env;
 
-module.exports.connect = async () => {
+module.exports.isConnected = () => {
   const connectedState = [mongoose.STATES.connected];
-  isConnected = connectedState.indexOf(mongoose.connection.readyState) !== -1;
+  return connectedState.indexOf(mongoose.connection.readyState) !== -1;
+};
 
-  if (!isConnected) {
+module.exports.connect = async () => {
+  if (!this.isConnected()) {
     mongoose
       .connect(MONGO_URI, {
         useNewUrlParser: true,
@@ -18,8 +20,4 @@ module.exports.connect = async () => {
         process.exit(1);
       });
   }
-};
-
-module.exports.checkConnection = async () => {
-  return mongoose.connection.readyState;
 };
