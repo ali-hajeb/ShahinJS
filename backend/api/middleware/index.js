@@ -3,7 +3,9 @@ const compression = require('compression');
 const bodyParser = require('body-parser');
 const passport = require('../passport');
 const helmet = require('helmet');
+const schedule = require('node-schedule');
 const { isDev, isProd } = require('../utils');
+require('../services/scheduleTasks');
 
 module.exports = (app) => {
   if (isProd) {
@@ -14,4 +16,8 @@ module.exports = (app) => {
   app.use(bodyParser.urlencoded({ extended: true }));
   passport.init(app);
   if (isDev) app.use(morgan('dev'));
+
+  process.on('SIGINT', () => {
+    schedule.gracefulShutdown().then(() => process.exit(0));
+  });
 };
